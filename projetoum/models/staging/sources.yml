@@ -1,0 +1,150 @@
+version: 2
+
+sources:
+  - name: ecommerce
+    description: "E-commerce dados para nossa loja"
+    schema: dbt_dw_raw
+    loader: bigquery
+
+    tables:
+      - name: avaliacoes
+        description: "Tabela de avaliações dos produtos"
+        columns:
+          - name: cliente_id
+            description: "FK do cliente que fez a avaliação"
+            data_test:
+              - name: not_null
+          - name: produto_id
+            description: "FK do produto avaliado"
+          - name: nota
+            description: "Nota da avaliação"
+          - name: comentario
+            description: "Comentário da avaliação"
+          - name: data_avaliacao
+            description: "Data da avaliação"
+
+      - name: carrinho
+        description: "Carrinho de compras"
+        columns:
+          - name: cliente_id
+            description: "FK do cliente que fez a compra"
+            data_test:
+              - name: not_null
+          - name: produto_id
+            description: "FK do produto comprado"
+            data_test:
+              - name: not_null
+          - name: data_adicionado
+            description: "Data que o produto foi adicionado ao carrinho"
+            data_test:
+              - name: not_null
+          - name: quantidade
+            description: "Quantidade do produto no carrinho"
+            data_test:
+              - name: not_null
+
+      - name: categorias
+        description: "Categorias dos produtos"
+        columns:
+          - name: id
+            description: "ID da categoria PK"
+            data_test:
+              - name: not_null
+          - name: nome
+            description: "Nome da categoria"
+          
+      - name: clientes
+        description: "Clientes da loja"
+        columns:
+          - name: id
+            description: "ID do cliente PK"
+            data_test:
+              - name: not_null
+          - name: nome
+            description: "Nome do cliente"
+          - name: email
+            description: "E-mail do cliente"
+          - name: telefone
+            description: "Telefone do cliente"
+          - name: data_registro
+            description: "Data de registro do cliente"
+
+      - name: itens_pedidos
+        description: "Itens dos pedidos"
+        columns:
+          - name: pedido_id
+            description: "FK do pedido"
+            data_test:
+              - name: not_null
+          - name: produto_id
+            description: "FK do produto"
+            data_test:
+              - name: not_null
+          - name: quantidade
+            description: "Quantidade do produto"
+          - name: preco_unitario
+            description: "Preço unitário do produto"
+          - name: subtotal
+            description: "Subtotal do item"
+
+      - name: pagamentos
+        description: "Pagamentos dos pedidos"
+        columns:
+          - name: pedido_id
+            description: "FK do pedido"
+            data_test:
+              - name: not_null
+          - name: produto_id
+            description: "FK do produto"
+            data_test:
+              - name: not_null
+          - name: quantidade
+            description: "Quantidade do produto"
+          - name: preco_unitario
+            description: "Preço unitário do produto"
+          - name: subtotal
+            description: "Subtotal do item"
+
+      - name: pedidos
+        description: "Pedidos dos clientes"
+        columns:
+          - name: id
+            description: "ID do pedido PK"
+            data_test:
+              - name: not_null
+          - name: cliente_id
+            description: "FK do cliente"
+            data_test:
+              - name: not_null
+          - name: endereco_id
+            description: "FK do endereço"
+            data_test:
+              - name: not_null
+          - name: data_pedido
+            description: "Data do pedido"
+            data_test:
+              - name: not_null
+          - name: status
+            description: "Status do pedido"
+
+      - name: produtos
+        description: "Produtos da loja"
+        columns:
+          - name: id
+            description: "ID do produto PK"
+            data_test:
+              - name: not_null
+          - name: nome
+            description: "Nome do produto"
+          - name: descricao
+            description: "Descrição do produto"
+          - name: categoria_id
+            description: "FK da categoria"
+          - name: preco
+            description: "Preço do produto"
+          - name: marca
+            description: "Marca do produto"
+          - name: estoque
+            description: "Quantidade em estoque"
+          - name: data_cadastro
+            description: "Data de cadastro do produto"
